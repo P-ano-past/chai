@@ -4,13 +4,34 @@ import axios from "axios";
 import { Configuration, OpenAIApi } from "openai";
 
 function Main() {
-  const [textField, setTextField] = useState();
+  const [textField, setTextField] = useState("");
   const [data, setData] = useState();
+
+  const getMessages = async () => {
+    const options = {
+      method: "POST",
+      body: JSON.stringify({ message: textField }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const response = await fetch(
+        `http://localhost:3001/completions`,
+        options
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {});
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    getMessages();
     console.log(`textField: `, textField);
   };
 
