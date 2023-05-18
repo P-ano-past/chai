@@ -5,26 +5,28 @@ import { Configuration, OpenAIApi } from "openai";
 
 function Main() {
   const [textField, setTextField] = useState("");
-  const [data, setData] = useState();
+  const [data, setData] = useState({});
 
   const getMessages = async () => {
-    const options = {
-      method: "POST",
-      body: JSON.stringify({ message: textField }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    try {
-      const response = await fetch(
-        `http://localhost:3001/completions`,
-        options
-      );
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
+    setData({ message: "Hello there! How can I assist you today?" });
+    // const options = {
+    //   method: "POST",
+    //   body: JSON.stringify({ message: textField }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
+    // try {
+    //   const response = await fetch(
+    //     `http://localhost:3001/completions`,
+    //     options
+    //   );
+    //   const data = await response.json();
+    //   console.log(data);
+    //   console.log(`textField: `, textField);
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   useEffect(() => {});
@@ -32,7 +34,6 @@ function Main() {
   const handleSubmit = (e) => {
     e.preventDefault();
     getMessages();
-    console.log(`textField: `, textField);
   };
 
   return (
@@ -46,7 +47,6 @@ function Main() {
                 value={textField}
                 onChange={(e) => {
                   setTextField(e.target.value);
-                  console.log(`textField: `, textField);
                 }}
               />
             </Form.Group>
@@ -56,7 +56,7 @@ function Main() {
       </Row>
       <Row>
         <Col>
-          <p>{data}</p>
+          <p>{data.message}</p>
         </Col>
       </Row>
     </Container>
